@@ -55,7 +55,7 @@ var treegrid = new ej.treegrid.TreeGrid({
     editSettings: {allowAdding:true, allowEditing: true, allowDeleting:true, mode: 'Cell'},
     allowFiltering: true,
     allowSorting: true,
-    toolbar: ['Add', 'Delete', 'Update', 'Cancel', 'Indent', 'Outdent','ExpandAll','CollapseAll','Search'],
+    toolbar: ['Add', 'Delete', 'Update', 'Cancel', 'Search'],
     columns: [
         { field: 'TaskID', headerText: 'Player Jersey', width: 140, textAlign: 'right',isPrimaryKey:true },
         { field: 'FIELD1', headerText: 'Player Name', width: 140 },
