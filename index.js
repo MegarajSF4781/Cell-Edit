@@ -1,68 +1,109 @@
-ej.treegrid.TreeGrid.Inject(ej.treegrid.InfiniteScroll, ej.treegrid.Page, ej.treegrid.VirtualScroll);
+ej.treegrid.TreeGrid.Inject(ej.treegrid.InfiniteScroll, ej.treegrid.Page, ej.treegrid.VirtualScroll, ej.treegrid.Filter, ej.treegrid.Sort);
 
-virtualScrollData = [];
-parentMap = new Map();
-
-virtualData = [];
-    function dataSource() {
-        var parent = -1;
-        var parentId = null;
-        var names = ['VINET', 'TOMSP', 'HANAR', 'VICTE', 'SUPRD', 'HANAR', 'CHOPS', 'RICSU', 'WELLI', 'HILAA', 'ERNSH', 'CENTC',
-            'OTTIK', 'QUEDE', 'RATTC', 'ERNSH', 'FOLKO', 'BLONP', 'WARTH', 'FRANK', 'GROSR', 'WHITC', 'WARTH', 'SPLIR', 'RATTC', 'QUICK', 'VINET',
-            'MAGAA', 'TORTU', 'MORGK', 'BERGS', 'LEHMS', 'BERGS', 'ROMEY', 'ROMEY', 'LILAS', 'LEHMS', 'QUICK', 'QUICK', 'RICAR', 'REGGC', 'BSBEV',
-            'COMMI', 'QUEDE', 'TRADH', 'TORTU', 'RATTC', 'VINET', 'LILAS', 'BLONP', 'HUNGO', 'RICAR', 'MAGAA', 'WANDK', 'SUPRD', 'GODOS', 'TORTU',
-            'OLDWO', 'ROMEY', 'LONEP', 'ANATR', 'HUNGO', 'THEBI', 'DUMON', 'WANDK', 'QUICK', 'RATTC', 'ISLAT', 'RATTC', 'LONEP', 'ISLAT', 'TORTU',
-            'WARTH', 'ISLAT', 'PERIC', 'KOENE', 'SAVEA', 'KOENE', 'BOLID', 'FOLKO', 'FURIB', 'SPLIR', 'LILAS', 'BONAP', 'MEREP', 'WARTH', 'VICTE',
-            'HUNGO', 'PRINI', 'FRANK', 'OLDWO', 'MEREP', 'BONAP', 'SIMOB', 'FRANK', 'LEHMS', 'WHITC', 'QUICK', 'RATTC', 'FAMIA'];
-        for (var i = 0; i < 1000; i++) {
-            if (i % 5 === 0) {
-                parent = i;
-            }
-            if (i % 5 !== 0) {
-                var crew = 'Crew';
-                var num = isNaN((virtualData.length % parent) - 1) ? 0 : (virtualData.length % parent) - 1;
-                virtualData[num][crew].push({
-                    'TaskID': i + 1,
-                    'FIELD1': names[i % 100],
-                    'FIELD2': 1967 + (i % 10),
-                    'FIELD3': (i % 2 == 0) ? 395 + 2 : (i % 5 == 0) ? 395 + 1 : 395 + 25,
-                    'FIELD4': (i % 2 == 0) ? 87 + 2 : (i % 5 == 0) ? 87 + 1 : 87 + 15,
-                });
-            }
-            else {
-                virtualData.push({
-                    'TaskID': i + 1,
-                    'Crew': [],
-                    'FIELD1': names[i % 100],
-                    'FIELD2': 1967 + (i % 10),
-                    'FIELD3': (i % 3 == 0) ? 395 + (i + 6) : (i % 4 == 0) ? 395 + (i + 4) : 395 + (i + 13),
-                    'FIELD4': (i % 3 == 0) ? 87 + (i + 3) : (i % 4 == 0) ? 87 + (i + 2) : 87 + (i + 12),
-
-                });
-            }
+if (window.virtualScrollData.length <= 0) {
+        if (typeof (window.VirtualdataSource) === 'function') {
+            window.VirtualdataSource();
         }
     }
-if (virtualData.length <= 0) {
-    dataSource();
-}
 
 var treegrid = new ej.treegrid.TreeGrid({
-    dataSource: virtualData,
+    dataSource: window.virtualScrollData,
     allowPaging: true,
-    treeColumnIndex: 1,
     height: 400,
-    childMapping: 'Crew',
+    clipMode: 'EllipsisWithTooltip',
+    treeColumnIndex: 1,
+    idMapping: 'TaskID',
+    parentIdMapping: 'ParentID',
     editSettings: {allowAdding:true, allowEditing: true, allowDeleting:true, mode: 'Cell'},
     allowFiltering: true,
     allowSorting: true,
     toolbar: ['Add', 'Delete', 'Update', 'Cancel', 'Search'],
-    columns: [
-        { field: 'TaskID', headerText: 'Player Jersey', width: 140, textAlign: 'right',isPrimaryKey:true },
-        { field: 'FIELD1', headerText: 'Player Name', width: 140 },
-        { field: 'FIELD2', headerText: 'Year', width: 120, textAlign: 'right' },
-        { field: 'FIELD3', headerText: 'Stint', width: 120, textAlign: 'right' },
-        { field: 'FIELD4', headerText: 'TMID', width: 120, textAlign: 'right' }
-    ]
+     columns: [
+            {
+                field: 'TaskID',
+                headerText: 'ID',
+                width: '90',
+                textAlign: 'Right',
+                isPrimaryKey: true,
+                visible: false,
+            },
+            {
+                field: 'ResourceId',
+                headerText: 'Resource',
+                width: '360',
+                validationRules: { required: true }
+            },
+            {
+                field: 'Name',
+                headerText: 'Type',
+                width: '150'
+            },
+            {
+                field: 'Status',
+                headerText: 'Status',
+                width: '210',
+                textAlign: 'Center',
+                validationRules: { required: true }
+            },
+            {
+                field: 'Region',
+                headerText: 'Region',
+                width: '180',
+                validationRules: { required: true }
+            },
+            {
+                field: 'Environment',
+                headerText: 'Environment',
+                width: '140',
+            },
+            {
+                field: 'MonthlyCost',
+                headerText: 'Monthly Cost ($)',
+                width: '130',
+                textAlign: 'Right',
+                format: 'C0',
+                type: 'number'
+            },
+            {
+                field: 'Cpu',
+                headerText: 'CPU (%)',
+                width: '120',
+                textAlign: 'Right',
+                format: 'N0',
+                type: 'number'
+            },
+            {
+                field: 'Memory',
+                headerText: 'Memory (%)',
+                width: '110',
+                textAlign: 'Right',
+                format: 'N0',
+                type: 'number'
+            },
+            {
+                field: 'Disk',
+                headerText: 'Disk (%)',
+                width: '110',
+                textAlign: 'Right',
+                format: 'N0',
+                type: 'number'
+            },
+            {
+                field: 'InstanceCount',
+                headerText: 'Instances',
+                width: '110',
+                textAlign: 'Right',
+                format: 'N0',
+                type: 'number'
+            },
+            {
+                field: 'Priority',
+                headerText: 'Priority',
+                width: '130',
+                textAlign: 'Left',
+                validationRules: { required: true }
+            }      
+        ]
 });
 treegrid.appendTo('#TreeGrid');
 var virtual = new ej.buttons.Button();
