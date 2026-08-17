@@ -25,7 +25,7 @@ var treegrid = new ej.treegrid.TreeGrid({
                 width: '90',
                 textAlign: 'Right',
                 isPrimaryKey: true,
-                visible: false,
+                // visible: false,
             },
             {
                 field: 'ResourceId',
@@ -106,26 +106,36 @@ var treegrid = new ej.treegrid.TreeGrid({
         ]
 });
 treegrid.appendTo('#TreeGrid');
-var virtual = new ej.buttons.Button();
-virtual.appendTo('#virtual');
-document.getElementById('virtual').addEventListener('click', function () {
-    treegrid.enableVirtualization = true;
-    treegrid.allowPaging = false;
-    treegrid.enableInfiniteScrolling = false;
-})
 
-var infinite = new ej.buttons.Button();
-infinite.appendTo('#infinite');
-document.getElementById('infinite').addEventListener('click', function () {
-    treegrid.enableVirtualization = false;
-    treegrid.allowPaging = false;
-    treegrid.enableInfiniteScrolling = true;
-})
+var radioButton = new ej.buttons.RadioButton({ label: 'Paging', name: 'scrollmode', value: 'paging', checked: true });
+radioButton.appendTo('#radio1');
 
-var page = new ej.buttons.Button();
-page.appendTo('#page');
-document.getElementById('page').addEventListener('click', function () {
-    treegrid.enableVirtualization = false;
-    treegrid.allowPaging = true;
-    treegrid.enableInfiniteScrolling = false;
-})
+radioButton = new ej.buttons.RadioButton({ label: 'Virtualization', name: 'scrollmode', value: 'virtual' });
+radioButton.appendTo('#radio2');
+
+radioButton = new ej.buttons.RadioButton({ label: 'Infinite Scrolling', name: 'scrollmode', value: 'infinite' });
+radioButton.appendTo('#radio3');
+
+function applyScrollMode(mode) {
+    if (mode === 'paging') {
+        treegrid.enableVirtualization = false;
+        treegrid.enableInfiniteScrolling = false;
+        treegrid.allowPaging = true;
+    } else if (mode === 'virtual') {
+        treegrid.allowPaging = false;
+        treegrid.enableInfiniteScrolling = false;
+        treegrid.enableVirtualization = true;
+    } else if (mode === 'infinite') {
+        treegrid.enableVirtualization = false;
+        treegrid.allowPaging = false;
+        treegrid.enableInfiniteScrolling = true;
+    }
+}
+
+document.querySelectorAll('input[name="scrollmode"]').forEach(function (el) {
+    el.addEventListener('change', function () {
+        if (el.checked) {
+            applyScrollMode(el.value);
+        }
+    });
+});

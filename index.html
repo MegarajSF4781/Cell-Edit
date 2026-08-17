@@ -10,10 +10,55 @@
     <script src="https://cdn.syncfusion.com/ej2/syncfusion-helper.js" type ="text/javascript"></script>
 </head>
 <body>
-    <button id="virtual">Enable Virtualization</button>
-    <button id="infinite">Enable InfiniteScrolling</button>
-    <button id="page">Enable Paging</button>
-    <div style="margin: 50px;" id="TreeGrid"></div>
+    <style>
+        .e-sample-layout {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            margin: 50px;
+            gap: 20px;
+        }
+        .e-treegrid-container {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        .e-property-panel {
+            flex: 0 0 240px;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 4px;
+            background: #f9f9f9;
+            font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        .e-property-panel h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #333;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 8px;
+        }
+        .e-property-panel .row {
+            margin: 8px 0;
+        }
+        .e-property-panel label.e-radio-wrapper {
+            margin-right: 0;
+        }
+    </style>
+    <div class="e-sample-layout">
+        <div class="e-treegrid-container" id="TreeGrid"></div>
+        <div class="e-property-panel">
+            <h4>Scrolling Mode</h4>
+            <div class="row">
+                <input id="radio1" type="radio" name="scrollmode" value="paging" checked />
+            </div>
+            <div class="row">
+                <input id="radio2" type="radio" name="scrollmode" value="virtual" />
+            </div>
+            <div class="row">
+                <input id="radio3" type="radio" name="scrollmode" value="infinite" />
+            </div>
+        </div>
+    </div>
 <script src="index.js" type="text/javascript"></script>
 </body>
 </html>
