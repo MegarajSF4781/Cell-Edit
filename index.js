@@ -42,20 +42,21 @@ var treegrid = new ej.treegrid.TreeGrid({
                 field: 'Status',
                 headerText: 'Status',
                 width: '210',
-                textAlign: 'Center',
+                editType: 'dropdownedit',
                 validationRules: { required: true }
             },
             {
                 field: 'Region',
                 headerText: 'Region',
                 width: '180',
+                editType: 'dropdownedit',
                 validationRules: { required: true }
             },
-            {
-                field: 'Environment',
-                headerText: 'Environment',
-                width: '140',
-            },
+            // {
+            //     field: 'Environment',
+            //     headerText: 'Environment',
+            //     width: '140',
+            // },
             {
                 field: 'MonthlyCost',
                 headerText: 'Monthly Cost ($)',
@@ -101,6 +102,7 @@ var treegrid = new ej.treegrid.TreeGrid({
                 headerText: 'Priority',
                 width: '130',
                 textAlign: 'Left',
+                editType: 'dropdownedit',
                 validationRules: { required: true }
             }      
         ]
